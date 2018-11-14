@@ -1,0 +1,33 @@
+{% from "_helpers.html" import background_tile, redirect_button, invisible_text %}
+{% extends "bootstrap/base.html" %}
+{% block title %} Don't Step on the White Tiles {% endblock %}
+
+{% block scripts %}
+  {{super()}}
+  <script src="{{ url_for('static', filename='js/game.js') }}"></script>
+  <script type="text/javascript">
+    var $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
+    var num_layers = {{game_state.num_layers}}
+    var num_tiles = {{game_state.num_tiles}}
+  </script>
+{% endblock %}
+
+{% block content %}
+  {% set tile_width = 10 %}
+  {% set tile_height = 100/(game_state.num_layers+1) %}
+  {% set start_x = (100-tile_width*game_state.num_tiles)/2 %}
+
+  {% for i in range(game_state.num_layers) %}
+    {% for j in range(game_state.num_tiles) %}
+      {% if game_state.tiles[i][j] == 1 %}
+        {{background_tile(start_x + tile_width*j, tile_height*i, tile_width, tile_height, 'black', i|string + "-" + j|string, 'game_tiles')}}
+      {% else %}
+        {{background_tile(start_x + tile_width*j, tile_height*i, tile_width, tile_height, 'white', i|string + "-" + j|string, 'game_tiles')}}
+      {% endif %}
+    {% endfor %}
+  {% endfor %}
+
+  {% for j in range(game_state.num_tiles) %}
+    {{background_tile(start_x + tile_width*j, tile_height*game_state.num_layers, tile_width, tile_height, 'gray', j|string, 'tap_tiles')}}
+  {% endfor %}
+{% endblock %}

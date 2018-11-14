@@ -1,0 +1,43 @@
+{% macro background_tile(left_pos, top_pos, width, height, color, id, class) %}
+  <div style="position:fixed; left:{{left_pos}}%; top:{{top_pos}}%;
+              width:{{width}}%; height:{{height}}%;
+              background-color:{{color}}; z-index:-1"
+       id="{{id}}"
+       class="{{class}}"> </div>
+{% endmacro %}
+
+{% macro redirect_button(url, left_pos, top_pos, name) %}
+  <button type="button"
+          onclick="{{url}}"
+          class="btn btn-outline-dark"
+          style="position:fixed; left:{{left_pos}}%; top:{{top_pos}}%;
+                 width:10%"> {{name}} </button>
+{% endmacro %}
+
+{% macro render_field(field) %}
+  <dt>{{ field.label }}
+  {{ field(size=10, **kwargs)|safe }}
+  {% if field.errors %}
+    <ul class=errors>
+    {% for error in field.errors %}
+      <li>{{ error }}</li>
+    {% endfor %}
+    </ul>
+  {% endif %}
+
+{% endmacro %}
+
+{% macro render_field2(field) %}
+  <dt>{{ field.label }}
+  <dd>
+  {{ field(size=10, **kwargs)|safe }}
+  {% if field.errors %}
+    <ul class=errors>
+    {% for error in field.errors %}
+      <li>{{ error }}</li>
+    {% endfor %}
+    </ul>
+  {% endif %}
+  </dd>
+
+{% endmacro %}

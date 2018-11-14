@@ -1,0 +1,14 @@
+{% from "_helpers.html" import render_field %}
+{% extends "bootstrap/base.html" %}
+{% block title %} Don't Step on the White Tiles {% endblock %}
+
+{% block content %}
+  {{score}}
+  <form method="POST" action="/game_over/{{score}}">
+    <dl>
+      {{ form.csrf_token }}
+      {{ render_field(form.name) }}
+      <dt><input type="submit" value="Submit" class="btn btn-primary">
+    </dl>
+  </form>
+{% endblock %}

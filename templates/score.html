@@ -1,0 +1,15 @@
+{% extends "bootstrap/base.html" %}
+{% block title %} Don't Step on the White Tiles {% endblock %}
+
+{% block scripts %}
+  {{super()}}
+  <script src="{{ url_for('static', filename='js/score.js') }}"></script>
+  <script type="text/javascript">
+    var $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
+  </script>
+{% endblock %}
+
+{% block content %}
+  <div id="score">{{score}}</div>
+  <div id="time_left">{{time_left}}</div>
+{% endblock %}

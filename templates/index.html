@@ -1,0 +1,18 @@
+{% from "_helpers.html" import background_tile, redirect_button %}
+{% extends "bootstrap/base.html" %}
+{% block title %} Don't Step on the White Tiles {% endblock %}
+{% block content %}
+  {% set tile_width = 10 %}
+  {% set tile_height = 100 %}
+
+  {% for i in range(6) %}
+    {% if i % 2 == 0 %}
+      {{background_tile(tile_width*i, 0, tile_width, tile_height, 'white', i|string, 'start_tiles')}}
+    {% else %}
+      {{background_tile(tile_width*i, 0, tile_width, tile_height, 'black', i|string, 'start_tiles')}}
+    {% endif %}
+  {% endfor %}
+
+  {{redirect_button("window.location.href='/new_game'", 10, 90, 'Start')}}
+  {{redirect_button("window.location.href='/highscores'", 30, 90, 'High Scores')}}
+{% endblock %}

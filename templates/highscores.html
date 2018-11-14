@@ -1,0 +1,9 @@
+{% extends "bootstrap/base.html" %}
+{% block title %} Don't Step on the White Tiles {% endblock %}
+
+{% block content %}
+  {% for i in range(10) %}
+    {{i+1}}. {{sorted_scores[i][0]}} with {{sorted_scores[i][1]}} pts <br>
+  {% endfor %}
+  <button type="button" onclick="window.location.href='/'" class="btn btn-dark">Back</button>
+{% endblock %}
