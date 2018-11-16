@@ -3,7 +3,7 @@ $(document).ready(function() {
   var time_left = $('#time_left');
 
   var frame_rate = 20
-  function loop() {
+  function score_loop() {
     $.getJSON($SCRIPT_ROOT +'/get_score_data',
       {},
       function(data) {
@@ -11,9 +11,9 @@ $(document).ready(function() {
           window.location.href="/game_over/"+String(score.html());
         }
         score.html(data.score)
-        time_left.html(data.time_left)
+        time_left.html(parseFloat(data.time_left).toFixed(2))
     });
-    setTimeout(loop, parseInt(1000/frame_rate));
+    setTimeout(score_loop, parseInt(1000/frame_rate));
   }
-  var timer = setTimeout(loop, parseInt(1000/frame_rate))
+  var timer = setTimeout(score_loop, parseInt(1000/frame_rate))
 });

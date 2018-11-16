@@ -30,4 +30,13 @@
   {% for j in range(game_state.num_tiles) %}
     {{background_tile(start_x + tile_width*j, tile_height*game_state.num_layers, tile_width, tile_height, 'gray', j|string, 'tap_tiles')}}
   {% endfor %}
+
+
+  <div style="text-align:center; font-size:100%;
+              font-family:'Comic Sans MS',cursive,sans-serif; position:absolute;
+              top:50%; left:10%; transform:translate(-50%, -50%); font-size:200%;">
+    <p> <strong> Score: </strong> <span id="score"> {{score}} </span> </p>
+    <p> <strong> Time Left: </strong> <span id="time_left"> {{time_left}} </span> seconds </p>
+    <button type="button" onclick="window.location.href='/'" class="btn btn-dark" style="margin-top:10%">New Game</button>
+  </div>
 {% endblock %}

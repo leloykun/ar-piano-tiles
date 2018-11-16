@@ -3,7 +3,10 @@
 {% block title %} Don't Step on the White Tiles {% endblock %}
 
 {% block content %}
-  {{score}}
+  <div style="text-align:center; font-size:120%;
+              font-family:'Comic Sans MS',cursive,sans-serif; position:absolute;
+              top:50%; left:50%; transform:translate(-50%, -50%);">
+  <p> <strong> Score: </strong> {{score}} </p>
   <form method="POST" action="/game_over/{{score}}">
     <dl>
       {{ form.csrf_token }}
@@ -11,4 +14,5 @@
       <dt><input type="submit" value="Submit" class="btn btn-primary">
     </dl>
   </form>
+  </div>
 {% endblock %}

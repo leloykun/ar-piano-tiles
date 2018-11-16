@@ -1,4 +1,7 @@
 $(document).ready(function() {
+  var score = $('#score');
+  var time_left = $('#time_left');
+
   function get_front_tiles() {
     var front_tiles = ""
     for (var j = 0; j < num_tiles; ++j) {
@@ -36,6 +39,14 @@ $(document).ready(function() {
       function(data) {
         var front_tiles = get_front_tiles()
         var pressed_tiles = data.pressed_tiles
+        for (var j = 0; j < num_tiles; ++j) {
+          var tile = document.getElementById(String(j))
+          if (pressed_tiles.charAt(j) == "1")
+            tile.style.backgroundColor = "DarkSlateGray"
+          else
+            tile.style.backgroundColor = "Gray"
+        }
+
         //alert(front_tiles + "|" + pressed_tiles)
         if (front_tiles == pressed_tiles)
           window.location.href='/update_game';
@@ -48,6 +59,15 @@ $(document).ready(function() {
       function(data) {
         if (data.ongoing == "true")
           check_proper_tap()
+    });
+    $.getJSON($SCRIPT_ROOT +'/get_score_data',
+      {},
+      function(data) {
+        if (data.time_left <= 0) {
+          window.location.href="/game_over/"+String(score.html());
+        }
+        score.html(data.score)
+        time_left.html(parseFloat(data.time_left).toFixed(2))
     });
     setTimeout(loop, parseInt(1000/frame_rate));
   }

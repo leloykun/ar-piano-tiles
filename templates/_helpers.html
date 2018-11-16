@@ -6,12 +6,12 @@
        class="{{class}}"> </div>
 {% endmacro %}
 
-{% macro redirect_button(url, left_pos, top_pos, name) %}
+{% macro redirect_button(url, left_pos, top_pos, name, font_size) %}
   <button type="button"
           onclick="{{url}}"
           class="btn btn-outline-dark"
           style="position:fixed; left:{{left_pos}}%; top:{{top_pos}}%;
-                 width:10%"> {{name}} </button>
+                 width:10%; font-size:{{font_size}}%; text-align:center"> {{name}} </button>
 {% endmacro %}
 
 {% macro render_field(field) %}

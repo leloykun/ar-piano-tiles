@@ -20,6 +20,8 @@ Bootstrap(app)
 fd = FootDetector()
 g = Game()
 
+game_mode = "prev"
+
 class EnterNameForm(Form):
     name = StringField("Name", validators=[InputRequired()])
 
@@ -43,28 +45,27 @@ def update_game():
 
 @app.route('/score')
 def score():
-    return render_template('score.html', score=0, time_left=30.0)
+    return redirect('/game')
+    #return render_template('score.html', score=0, time_left=30.0)
 
 @app.route('/game_over/<score>', methods=['GET', 'POST'])
 def game_over(score):
     form = EnterNameForm()
     if form.validate_on_submit():
         with open('score_history.csv', 'a') as f:
-            f.write(form.name.data + "," + str(score))
+            f.write(form.name.data + "," + str(score) + '\r\n')
         return redirect('/highscores')
     return render_template('game_over.html', form=form, score=score)
 
 @app.route('/highscores')
 def highscores():
     score_history = csv.reader(open('score_history.csv'), delimiter=',')
-    print(score_history)
     sorted_scores = sorted(score_history, key=lambda row:int(row[1]), reverse=True)
-    print(sorted_scores)
     return render_template('highscores.html', sorted_scores=sorted_scores)
 
 @app.route('/get_pressed_tiles')
 def get_pressed_tiles():
-    res = fd.detect()
+    res = fd.detect(mode=game_mode)
     res = "".join(map(str, res))
     print(res)
     return jsonify(pressed_tiles=res)
@@ -72,7 +73,6 @@ def get_pressed_tiles():
 @app.route('/check_game_ongoing')
 def check_game_ongoing():
     id = request.args.get('id', '0')
-    print("true" if g.ongoing() else "false")
     return jsonify(ongoing="true" if g.ongoing() else "false", id=id)
 
 @app.route('/get_score_data')
@@ -84,10 +84,13 @@ def get_score_data():
 @app.route('/camera')
 def camera():
     while True:
-        raw_frame, gray_frame, delta_frame, thresh_frame = fd.read()
-        if not fd.show_frame(thresh_frame):
+        raw_frame, gray_frame, delta_frame, thresh_frame = fd.read(mode="prev")
+        cv2.rectangle(thresh_frame, (0, 0), (len(raw_frame[0]), len(raw_frame)//3), (0, 255, 0), 2)
+        cv2.rectangle(raw_frame, (0, 0), (len(raw_frame[0]), len(raw_frame)//3), (0, 255, 0), 2)
+        fd.show_frame("Threshold", thresh_frame)
+        if not fd.show_frame("Raw Frame", raw_frame):
             break
-        time.sleep(0.05)
+        time.sleep(0.10)
     return ""
 
 if __name__ == '__main__':

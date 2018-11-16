@@ -13,6 +13,24 @@
     {% endif %}
   {% endfor %}
 
-  {{redirect_button("window.location.href='/new_game'", 10, 90, 'Start')}}
-  {{redirect_button("window.location.href='/highscores'", 30, 90, 'High Scores')}}
+  {{redirect_button("window.location.href='/new_game'", 10, 80, 'Start', 150)}}
+  {{redirect_button("window.location.href='/highscores'", 30, 80, 'High Scores', 140)}}
+
+  <div style="margin-left:65%">
+    <div style="font-size:40pt; font-weight:'bolder'; margin-bottom:0; margin-top:0">
+      <table class="table  table-borderless">
+        <tbody>
+          <tr style="border-width:0"><td> Don't </td></tr>
+          <tr style="border-width:0"><td> Step </td></tr>
+          <tr style="border-width:0"><td> on the </td></tr>
+          <tr style="border-width:0"><td> White </td></tr>
+          <tr style="border-width:0"><td> Tiles </td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div>
+      <p> A project by <br> <strong> TEAM INTERACTIVE </strong> </p>
+      <p> Franz Cesista <br> Ray Mart Montesclaros <br> Rein Bugnot </p>
+    </div>
+  </div>
 {% endblock %}

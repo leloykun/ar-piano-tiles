@@ -7,7 +7,7 @@ import time
 import cv2
 import sys
 
-MARK_THRESH = 0.20
+MARK_THRESH = 0.10
 MIN_AREA = 500
 
 class FootDetector:
@@ -53,11 +53,11 @@ class FootDetector:
     def detect(self, thresh=None, mode="first", thresh_sensitivity=50):
         if thresh is None:
             _, _, _, thresh = self.read(mode, thresh_sensitivity)
-        res = [1 if np.sum(thresh[150:300, 100*i:100*(i+1)]) / (255*150*100) >= MARK_THRESH else 0 for i in range(4)]
+        res = [1 if np.sum(thresh[0:100, 100*i:100*(i+1)]) / (255*100*100) >= MARK_THRESH else 0 for i in range(4)]
         return res;
 
-    def show_frame(self, frame):
-        cv2.imshow("Frame", frame)
+    def show_frame(self, frame_name, frame):
+        cv2.imshow(frame_name, frame)
         key = cv2.waitKey(10) & 0xFF
         if key == ord("q"):
             cv2.destroyAllWindows()
