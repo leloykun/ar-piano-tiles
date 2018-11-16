@@ -1,4 +1,4 @@
-# ar_piano_tiles
+# Don't Step on the White Tiles
 
 #### Requirements
 - Python 3.*
