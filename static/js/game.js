@@ -15,6 +15,23 @@ $(document).ready(function() {
     return front_tiles
   }
 
+  function update_game() {
+    $.getJSON($SCRIPT_ROOT + '/update_game',
+      {},
+      function(data2) {
+        for (var i = 0; i < num_layers; ++i) {
+          for (var j = 0; j < num_tiles; ++j) {
+            var tile = document.getElementById(String(i) + "-" + String(j));
+            if (data2.tiles.charAt(i * num_tiles + j) == '0')
+              tile.style.backgroundColor = 'white'
+            else
+              tile.style.backgroundColor = 'black'
+          }
+        }
+      }
+    );
+  }
+
   $('.tap_tiles').click(function() {
     $.getJSON($SCRIPT_ROOT +'/check_game_ongoing',
       {id:parseInt($(this).attr('id'))},
@@ -30,7 +47,7 @@ $(document).ready(function() {
           }
 
           if (front_tiles == pressed_tiles)
-            window.location.href='/update_game';
+            update_game()
   }});});
 
   function check_proper_tap() {
@@ -49,7 +66,7 @@ $(document).ready(function() {
 
         //alert(front_tiles + "|" + pressed_tiles)
         if (front_tiles == pressed_tiles)
-          window.location.href='/update_game';
+          update_game()
   });}
 
   var frame_rate = 20

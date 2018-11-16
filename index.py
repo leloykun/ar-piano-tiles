@@ -41,7 +41,7 @@ def new_game():
 @app.route('/update_game')
 def update_game():
     g.next()
-    return redirect('/game')
+    return jsonify(tiles="".join("".join(map(str, line)) for line in g.tiles))
 
 @app.route('/score')
 def score():
